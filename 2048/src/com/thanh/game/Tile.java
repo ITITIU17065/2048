@@ -96,9 +96,9 @@ public class Tile {
 	    int letterX = 70+95*x + (75 - metrics.stringWidth(text)) / 2;
 	    int letterY = 70+95*y + ((75 - metrics.getHeight()) / 2) + metrics.getAscent();
 	    if(text == "2" || text == "4")
-	    	g.setColor(Color.black);
+	    	g.setColor(Color.decode("#776E65"));
 	    else
-	    	g.setColor(Color.white);
+	    	g.setColor(Color.decode("#F9F6F2"));
 	    g.setFont(font);
 	    g.drawString(text, letterX, letterY);
 	}

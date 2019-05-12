@@ -18,4 +18,7 @@ public class Board extends Canvas {
 			}
 		}
 	}
+	public void update() {
+		this.repaint();
+	}
 }
