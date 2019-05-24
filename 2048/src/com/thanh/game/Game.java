@@ -58,11 +58,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		if (!running)
 			return;
 		running = false;
-		try {
-			game.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		System.exit(0);
 	}
 
 	@Override
