@@ -1,64 +1,27 @@
 package com.thanh.game;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;	
 
-public class keyBoard implements KeyListener {
-	Matrix mat;
+public class keyBoard{
+	public static boolean[] pressed = new boolean[256];
+	public static boolean[] prev = new boolean[256];
 	
-	  //scoreBoard board;
-	
-	 
-	
-	    keyBoard(Matrix myMatrix, scoreBoard score) {
-	
-	        mat = myMatrix;
-
-	        board = score;
-
-
-	@Override
+	public void update() {
+		for(int i=0; i<4; i++) {
+			if(i==0) prev[KeyEvent.VK_LEFT] = pressed[KeyEvent.VK_LEFT];
+			if(i==2) prev[KeyEvent.VK_RIGHT] = pressed[KeyEvent.VK_RIGHT];
+			if(i==3) prev[KeyEvent.VK_UP] = pressed[KeyEvent.VK_UP];
+			if(i==4) prev[KeyEvent.VK_DOWN] = pressed[KeyEvent.VK_DOWN];
+		}
+	}
 	public void keyPressed(KeyEvent e) {
-		int c = e.getKeyCode();
-		if (c == KeyEvent.VK_UP) {
-			if (!mat.game_Over) {
-				
-				                 board.Update();
-				
-				                    mat.slide_Up();
-				
-				                    if(mat.game_Won){
-				
-				                        doGameOver();
-				
-				                    }
-				
-				                } else {
-				
-				                    doGameOver();
-				
-				                }
-
-		}
-		if else(c == KeyEvent.VK_UP) {
-
-		}
-		if else(c == KeyEvent.VK_UP) {
-
-		}
-		if else(c == KeyEvent.VK_UP) {
-
-		}
-
+		pressed[e.getKeyCode()] = true;
 	}
 
-	@Override
 	public void keyReleased(KeyEvent e) {
-
+		pressed[e.getKeyCode()] = false;
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
+	public boolean typed(int keyEvent) {
+		return	!pressed[keyEvent] && prev[keyEvent];
 	}
-
 }

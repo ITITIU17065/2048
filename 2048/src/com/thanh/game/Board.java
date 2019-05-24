@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Board extends Canvas {
+	
 	public void paint(Graphics g) {
 		Matrix m = new Matrix();
 		Tile t;
