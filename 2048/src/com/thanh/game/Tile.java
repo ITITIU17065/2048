@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-	public static int WIDTH = 75;
-	public static int HEIGHT = 75;
+	public static int WIDTH = 80;
+	public static int HEIGHT = 80;
 	public static int SLIDE_SPEED = 20;
 	public static int ARC_WIDTH = 10;
 	public static int ARC_HEIGHT = 10;
@@ -25,11 +25,13 @@ public class Tile {
 		this.x = x;
 		this.y = y;
 		tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		drawImage();
+		drawTile();
 	}
 
-	private void drawImage() {
+	private void drawTile() {
 		Graphics2D g = (Graphics2D) tileImage.getGraphics();
+		g.setColor(new Color(0,0,0,0));
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		if (value == 2) {
 			g.setColor(Color.decode("#EEE4DA"));
 			g.fillRoundRect(70 + 95 * x, 70 + 95 * y, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
@@ -102,6 +104,7 @@ public class Tile {
 			g.setColor(Color.decode("#CDC1B4"));
 			g.fillRoundRect(70 + 95 * x, 70 + 95 * y, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 		}	
+		
 		g.dispose();
 	}
 
