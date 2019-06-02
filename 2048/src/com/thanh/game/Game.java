@@ -25,7 +25,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		setFocusable(true);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
-		board = new Board(WIDTH/2 - Board.BOARD_WIDTH/2, HEIGHT/2 - Board.BOARD_HEIGHT/2);
+		board = new Board(WIDTH / 2 - Board.BOARD_WIDTH / 2, HEIGHT - Board.BOARD_HEIGHT - 20);
 	}
 
 	private void update() {
@@ -63,7 +63,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void run() {
-		while(running) {
+		while (running) {
 			update();
 			render();
 		}
