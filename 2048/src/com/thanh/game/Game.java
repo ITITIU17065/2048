@@ -20,16 +20,18 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	private boolean running = false;
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private Board board;
+	private Matrix matrix;
 
 	public Game() {
 		setFocusable(true);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
 		board = new Board(WIDTH / 2 - Board.BOARD_WIDTH / 2, HEIGHT - Board.BOARD_HEIGHT - 20);
+		matrix = new Matrix();
 	}
 
 	private void update() {
-		board.update();
+		matrix.update();
 		Keyboard.update();
 	}
 
@@ -38,7 +40,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		g.setColor(Color.decode("#FAF8EF"));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		board.render(g);
-		// Draw the board
 		g.dispose();
 
 		Graphics2D g2d = (Graphics2D) getGraphics();

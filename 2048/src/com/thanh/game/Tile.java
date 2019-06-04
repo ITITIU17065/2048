@@ -78,30 +78,6 @@ public class Tile {
 			g.setColor(Color.decode("#F6BC2B"));
 			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 			drawString(g, "2048", font);
-		} else if (value == 4096) {
-			g.setColor(Color.decode("#FC726C"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "4096", font);
-		} else if (value == 8192) {
-			g.setColor(Color.decode("#FD5D5A"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "8192", font);
-		} else if (value == 16384) {
-			g.setColor(Color.decode("#F15137"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "16384", font);
-		} else if (value == 32768) {
-			g.setColor(Color.decode("#6CAED9"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "32768", font);
-		} else if (value == 65536) {
-			g.setColor(Color.decode("#589CE6"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "65536", font);
-		} else if (value == 131072) {
-			g.setColor(Color.decode("#0073C2"));
-			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
-			drawString(g, "131072", font);
 //
 //		} else {
 //			g.setColor(Color.decode("#CDC1B4"));
