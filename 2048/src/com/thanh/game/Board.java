@@ -2,31 +2,29 @@ package com.thanh.game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class Board {
 	public static final int ROWS = 4;
 	public static final int COLS = 4;
 
-	private final int startingTiles = 2;
-	private Tile[][] board;
 	private boolean gameover;
 	private boolean win;
 	private BufferedImage gameBoard;
 	private BufferedImage finalBoard;
 	private int x;
 	private int y;
+	private Matrix matrix;
+	private Tile tile;
 
-	private static int SPACING = 10;
+	private static int SPACING= 10;
 	public static int BOARD_WIDTH = (COLS + 1) * SPACING + COLS * Tile.WIDTH;
 	public static int BOARD_HEIGHT = (ROWS + 1) * SPACING + ROWS * Tile.HEIGHT;
 
 	public Board(int x, int y) {
 		this.x = x;
 		this.y = y;
-		board = new Tile[ROWS][COLS];
+		matrix = new Matrix();
 		gameBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		finalBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
@@ -49,6 +47,7 @@ public class Board {
 	}
 
 	public void update() {
+		matrix.update();
 	}
 
 
@@ -65,13 +64,11 @@ public class Board {
 	public void render(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) finalBoard.getGraphics();
 		g2d.drawImage(gameBoard, 0, 0, null);
-
+		
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
-				Tile current = board[row][col];
-				if (current == null)
-					continue;
-				current.render(g2d);
+				tile = new Tile(matrix.matrix[row][col],getTileX(col),getTileY(row));
+				tile.render(g2d);
 			}
 		}
 		g.drawImage(finalBoard, x, y, null);

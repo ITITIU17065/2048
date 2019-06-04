@@ -20,18 +20,16 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	private boolean running = false;
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private Board board;
-	private Matrix matrix;
 
 	public Game() {
 		setFocusable(true);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
 		board = new Board(WIDTH / 2 - Board.BOARD_WIDTH / 2, HEIGHT - Board.BOARD_HEIGHT - 20);
-		matrix = new Matrix();
 	}
 
 	private void update() {
-		matrix.update();
+		board.update();
 		Keyboard.update();
 	}
 

@@ -31,7 +31,7 @@ public class Tile {
 	private void drawTile() {
 		Graphics2D g = (Graphics2D) tileImage.getGraphics();
 
-		g.setColor(new Color(0,0,0,0));
+		g.setColor(new Color(0, 0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		if (value == 2) {
@@ -78,10 +78,9 @@ public class Tile {
 			g.setColor(Color.decode("#F6BC2B"));
 			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 			drawString(g, "2048", font);
-//
-//		} else {
-//			g.setColor(Color.decode("#CDC1B4"));
-//			g.fillRoundRect(0,  0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+		} else {
+			g.setColor(Color.decode("#CDC1B4"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 		}
 
 		g.dispose();
@@ -99,19 +98,7 @@ public class Tile {
 		g.drawString(text, letterX, letterY);
 	}
 
-	public void update() {
-
-	}
-
 	public void render(Graphics2D g) {
 		g.drawImage(tileImage, x, y, null);
-	}
-
-	public int getValue() {
-		return value;
-	}
-
-	public void setValue(int value) {
-		this.value = value;
 	}
 }

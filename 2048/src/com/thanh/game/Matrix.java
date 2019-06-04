@@ -7,7 +7,7 @@ public class Matrix {
 	public static final int ROWS = 4;
 	public static final int COLS = 4;
 
-	private int[][] matrix;
+	public int[][] matrix;
 	private boolean canMove = false;
 	private boolean canCombine = false;
 
@@ -169,7 +169,6 @@ public class Matrix {
 			canCombine = false;
 			canMove = false;
 		}
-		printArr();
 	}
 
 	private void start() {
@@ -190,13 +189,4 @@ public class Matrix {
 			}
 		}
 	}
-
-//	private int getTileY(int row) {
-//
-//		return SPACING + row * Tile.HEIGHT + row * SPACING;
-//	}
-//
-//	private int getTileX(int col) {
-//		return SPACING + col * Tile.WIDTH + col * SPACING;
-//	}
 }
