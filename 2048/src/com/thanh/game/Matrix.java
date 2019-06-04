@@ -4,10 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class Matrix {
-	public static final int ROWS = 4;
-	public static final int COLS = 4;
+	private int ROWS = Board.ROWS;
+	private int COLS = Board.COLS;
 
 	public int[][] matrix;
+	
 	private boolean canMove = false;
 	private boolean canCombine = false;
 
@@ -30,7 +31,7 @@ public class Matrix {
 						if (count - 1 != col)
 							canMove = true;
 					}
-				while (count < 4)
+				while (count < COLS)
 					matrix[row][count++] = 0;
 			}
 		} else if (dir == "RIGHT") {
@@ -56,7 +57,7 @@ public class Matrix {
 							canMove = true;
 						}
 					}
-				while (count < 4)
+				while (count < ROWS)
 					matrix[count++][col] = 0;
 
 			}

@@ -3,22 +3,23 @@ package com.thanh.game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-	public static int WIDTH = 80;
-	public static int HEIGHT = 80;
+	
+	public static int WIDTH = (Board.BOARD_WIDTH-(Board.COLS+1)*Board.SPACING)/Board.COLS;
+	public static int HEIGHT = (Board.BOARD_HEIGHT-(Board.ROWS+1)*Board.SPACING)/Board.ROWS;
 	public static int SLIDE_SPEED = 20;
 	public static int ARC_WIDTH = 10;
 	public static int ARC_HEIGHT = 10;
 
+	private int fontSize = (WIDTH+HEIGHT)*38/100/2;
 	private int value;
 	private BufferedImage tileImage;
 	private int x;
 	private int y;
-	private Font font = new Font("Clear Sans", Font.BOLD, 30);
+	private Font font = new Font("Clear Sans", Font.BOLD, fontSize);
 
 	public Tile(int value, int x, int y) {
 		this.value = value;

@@ -17,9 +17,9 @@ public class Board {
 	private Matrix matrix;
 	private Tile tile;
 
-	private static int SPACING= 10;
-	public static int BOARD_WIDTH = (COLS + 1) * SPACING + COLS * Tile.WIDTH;
-	public static int BOARD_HEIGHT = (ROWS + 1) * SPACING + ROWS * Tile.HEIGHT;
+	public static int SPACING= 10;
+	public static int BOARD_WIDTH = 370;
+	public static int BOARD_HEIGHT = 370;
 
 	public Board(int x, int y) {
 		this.x = x;
@@ -49,8 +49,6 @@ public class Board {
 	public void update() {
 		matrix.update();
 	}
-
-
 
 	private int getTileY(int row) {
 
