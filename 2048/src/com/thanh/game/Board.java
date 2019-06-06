@@ -1,6 +1,7 @@
 package com.thanh.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -8,16 +9,16 @@ public class Board {
 	public static final int ROWS = 4;
 	public static final int COLS = 4;
 
-	private boolean gameover;
-	private boolean win;
 	private BufferedImage gameBoard;
 	private BufferedImage finalBoard;
 	private int x;
 	private int y;
+	private int score = 0;
+	private int highScore = 0;
 	private Matrix matrix;
 	private Tile tile;
 
-	public static int SPACING= 10;
+	public static int SPACING = 10;
 	public static int BOARD_WIDTH = 370;
 	public static int BOARD_HEIGHT = 370;
 
@@ -48,6 +49,7 @@ public class Board {
 
 	public void update() {
 		matrix.update();
+		score = matrix.score;
 	}
 
 	private int getTileY(int row) {
@@ -62,14 +64,23 @@ public class Board {
 	public void render(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) finalBoard.getGraphics();
 		g2d.drawImage(gameBoard, 0, 0, null);
-		
+
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
-				tile = new Tile(matrix.matrix[row][col],getTileX(col),getTileY(row));
+				tile = new Tile(matrix.matrix[row][col], getTileX(col), getTileY(row));
 				tile.render(g2d);
 			}
 		}
 		g.drawImage(finalBoard, x, y, null);
 		g2d.dispose();
+		
+		g.setColor(Color.LIGHT_GRAY);
+		g.setFont(new Font("Clear Sans", Font.BOLD, 30));
+		g.drawString("Score: " + score, 30, 70);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Clear Sans", Font.BOLD, 20));
+		g.drawString("Z to Undo", 30, 40);
+		g.drawString("X to Redo", 280, 40);
+		
 	}
 }
