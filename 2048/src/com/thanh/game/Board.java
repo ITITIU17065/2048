@@ -13,8 +13,8 @@ public class Board {
 	private BufferedImage finalBoard;
 	private int x;
 	private int y;
-	private int score = 0;
-	private int highScore = 0;
+	private int score ;
+	private float highScore;
 	private Matrix matrix;
 	private Tile tile;
 
@@ -49,7 +49,8 @@ public class Board {
 
 	public void update() {
 		matrix.update();
-		score = matrix.score;
+		this.score = matrix.score;
+		this.highScore = matrix.highScore;
 	}
 
 	private int getTileY(int row) {
@@ -76,7 +77,11 @@ public class Board {
 		
 		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(new Font("Clear Sans", Font.BOLD, 30));
-		g.drawString("Score: " + score, 30, 70);
+		g.drawString("Score: ", 30, 70);
+		g.drawString(""+score, 30, 110);
+		g.setColor(Color.RED);
+		g.drawString("HighScore: ", 220, 70);
+		g.drawString(""+(int)highScore, 220, 110);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Clear Sans", Font.BOLD, 20));
 		g.drawString("Z to Undo", 30, 40);
