@@ -10,6 +10,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import com.thanh.GUI.End;
+import com.thanh.GUI.Menu;
+
 public class Game extends JPanel implements KeyListener, Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,24 +23,43 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	private boolean running = false;
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private Board board;
+	private Menu menu;
+	private End end;
+
+	public static enum STATE {
+		MENU, GAME, END
+	};
+
+	public static STATE state = STATE.MENU;
 
 	public Game() {
 		setFocusable(true);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
+		addMouseListener(new MouseInput());
 		board = new Board(WIDTH / 2 - Board.BOARD_WIDTH / 2, HEIGHT - Board.BOARD_HEIGHT - 20);
+		menu = new Menu();
+		end = new End();
 	}
 
 	private void update() {
-		board.update();
-		Keyboard.update();
+		if (state == STATE.GAME) {
+			board.update();
+			Keyboard.update();
+		}
 	}
 
 	private void render() {
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setColor(Color.decode("#FAF8EF"));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		board.render(g);
+		if (state == STATE.GAME)
+			board.render(g);
+		else if (state == STATE.MENU) {
+			menu.render(g);
+		} else if (state == STATE.END) {
+			end.render(g);
+		}
 		g.dispose();
 
 		Graphics2D g2d = (Graphics2D) getGraphics();
@@ -71,12 +93,14 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		Keyboard.keyPressed(e);
+		if (state == STATE.GAME)
+			Keyboard.keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Keyboard.keyReleased(e);
+		if (state == STATE.GAME)
+			Keyboard.keyReleased(e);
 	}
 
 	@Override

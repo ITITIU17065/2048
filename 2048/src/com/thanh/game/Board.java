@@ -6,14 +6,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Board {
-	public static final int ROWS = 4;
-	public static final int COLS = 4;
+	public static int ROWS = 4;
+	public static int COLS = 4;
 
 	private BufferedImage gameBoard;
 	private BufferedImage finalBoard;
 	private int x;
 	private int y;
-	private int score ;
+	private int score;
 	private float highScore;
 	private Matrix matrix;
 	private Tile tile;
@@ -74,19 +74,19 @@ public class Board {
 		}
 		g.drawImage(finalBoard, x, y, null);
 		g2d.dispose();
-		
+
 		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(new Font("Clear Sans", Font.BOLD, 30));
 		g.drawString("Score: ", 30, 70);
-		g.drawString(""+score, 30, 110);
-		g.drawString("Boom: " + matrix.boom, 30, 150);
+		g.drawString("" + score, 30, 110);
+		g.drawString("Boom: " + matrix.bomb, 30, 150);
 		g.setColor(Color.RED);
 		g.drawString("HighScore: ", 220, 70);
-		g.drawString(""+(int)highScore, 220, 110);
+		g.drawString("" + (int) highScore, 220, 110);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Clear Sans", Font.BOLD, 20));
 		g.drawString("Z to Undo", 30, 40);
 		g.drawString("X to Redo", 280, 40);
-		
+		g.drawString("SPACE to Use Bomb", 180, 150);
 	}
 }

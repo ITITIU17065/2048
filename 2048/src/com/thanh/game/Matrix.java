@@ -13,17 +13,17 @@ import com.thanh.linkStack.LinkStack;
 public class Matrix {
 	private int ROWS = Board.ROWS;
 	private int COLS = Board.COLS;
-	private boolean gameover;
-	private boolean win;
+	public static boolean gameover;
+	public static boolean win;
 
-	public int[][] matrix = { { 16, 32, 32, 0 }, { 128, 0, 1024, 32 }, { 256, 512, 0, 512 }, { 16, 32, 64, 0 } };
+	public int[][] matrix;
 	private LinkStack undo;
 	private LinkStack redo;
 	private double winScore;
 	public int score = 0;
 	private int preScore;
 	public float highScore;
-	public int boom = 0;
+	public int bomb = 0;
 	private int addRock = 0;
 	private boolean isRock = false;
 
@@ -58,6 +58,16 @@ public class Matrix {
 				}
 			}
 		}
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (matrix[row][col] == 1) {
+					isRock = true;
+				} else
+					isRock = true;
+			}
+		}
+		if(win || gameover)
+			Game.state = Game.STATE.END;
 	}
 
 	private void moveTiles(String dir) {
@@ -207,13 +217,6 @@ public class Matrix {
 			}
 		}
 		this.score = Integer.parseInt(temp.split("-")[temp.split("-").length - 1]);
-		for (int row = 0; row < ROWS; row++) {
-			for (int col = 0; col < COLS; col++) {
-				if (matrix[row][col] == 1) {
-					isRock = true;
-				}
-			}
-		}
 	}
 
 	private void doRedo() {
@@ -229,13 +232,6 @@ public class Matrix {
 			}
 		}
 		this.score = Integer.parseInt(temp.split("-")[temp.split("-").length - 1]);
-		for (int row = 0; row < ROWS; row++) {
-			for (int col = 0; col < COLS; col++) {
-				if (matrix[row][col] == 1) {
-					isRock = true;
-				}
-			}
-		}
 	}
 
 	private void checkKeys() {
@@ -249,7 +245,7 @@ public class Matrix {
 			if (preScore == score) {
 				addRock++;
 			} else if (score - preScore == 32)
-				boom++;
+				bomb++;
 			else
 				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_RIGHT)) {
@@ -261,7 +257,7 @@ public class Matrix {
 			if (preScore == score) {
 				addRock++;
 			} else if (score - preScore == 32)
-				boom++;
+				bomb++;
 			else
 				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_UP)) {
@@ -273,7 +269,7 @@ public class Matrix {
 			if (preScore == score) {
 				addRock++;
 			} else if (score - preScore == 32)
-				boom++;
+				bomb++;
 			else
 				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_DOWN)) {
@@ -285,7 +281,7 @@ public class Matrix {
 			if (preScore == score) {
 				addRock++;
 			} else if (score - preScore == 32)
-				boom++;
+				bomb++;
 			else
 				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_Z)) {
@@ -293,9 +289,11 @@ public class Matrix {
 		} else if (Keyboard.typed(KeyEvent.VK_X)) {
 			doRedo();
 		} else if (Keyboard.typed(KeyEvent.VK_SPACE)) {
-			if (boom > 0 && isRock) {
+			if (bomb > 0 && isRock) {
+				undo.push(this.returnString(matrix), this.score);
+				redo = new LinkStack();
 				destroyRock();
-				boom--;
+				bomb--;
 			}
 		}
 		if (canCombine || canMove) {
@@ -309,15 +307,6 @@ public class Matrix {
 	private void destroyRock() {
 		int location = chooseRock();
 		matrix[location / 10][location % 10] = 0;
-		for (int row = 0; row < ROWS; row++) {
-			for (int col = 0; col < COLS; col++) {
-				if (matrix[row][col] == 1) {
-					return;
-				}
-			}
-			isRock = false;
-			return;
-		}
 	}
 
 	private void checkGameover() {
