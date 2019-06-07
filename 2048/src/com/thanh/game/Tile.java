@@ -7,14 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-	
-	public static int WIDTH = (Board.BOARD_WIDTH-(Board.COLS+1)*Board.SPACING)/Board.COLS;
-	public static int HEIGHT = (Board.BOARD_HEIGHT-(Board.ROWS+1)*Board.SPACING)/Board.ROWS;
+
+	public static int WIDTH = (Board.BOARD_WIDTH - (Board.COLS + 1) * Board.SPACING) / Board.COLS;
+	public static int HEIGHT = (Board.BOARD_HEIGHT - (Board.ROWS + 1) * Board.SPACING) / Board.ROWS;
 	public static int SLIDE_SPEED = 20;
 	public static int ARC_WIDTH = 10;
 	public static int ARC_HEIGHT = 10;
 
-	private int fontSize = (WIDTH+HEIGHT)*38/100/2;
+	private int fontSize = (WIDTH + HEIGHT) * 38 / 100 / 2;
 	private int value;
 	private BufferedImage tileImage;
 	private int x;
@@ -79,6 +79,29 @@ public class Tile {
 			g.setColor(Color.decode("#F6BC2B"));
 			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 			drawString(g, "2048", font);
+		} else if (value == 4096) {
+			g.setColor(Color.decode("#FC726C"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+			drawString(g, "4096", font);
+		} else if (value == 8192) {
+			g.setColor(Color.decode("#FD5D5A"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+			drawString(g, "8192", font);
+		} else if (value == 16384) {
+			g.setColor(Color.decode("#F15137"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+			drawString(g, "16384", font);
+		} else if (value == 32768) {
+			g.setColor(Color.decode("#6CAED9"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+			drawString(g, "32768", font);
+		} else if (value == 65536) {
+			g.setColor(Color.decode("#589CE6"));
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
+			drawString(g, "65536", font);
+		} else if (value == 1) {
+			g.setColor(Color.GRAY);
+			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 		} else {
 			g.setColor(Color.decode("#CDC1B4"));
 			g.fillRoundRect(0, 0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);

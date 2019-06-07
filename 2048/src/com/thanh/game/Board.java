@@ -79,6 +79,7 @@ public class Board {
 		g.setFont(new Font("Clear Sans", Font.BOLD, 30));
 		g.drawString("Score: ", 30, 70);
 		g.drawString(""+score, 30, 110);
+		g.drawString("Boom: " + matrix.boom, 30, 150);
 		g.setColor(Color.RED);
 		g.drawString("HighScore: ", 220, 70);
 		g.drawString(""+(int)highScore, 220, 110);

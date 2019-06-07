@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
-import java.util.Scanner;
 
 import com.thanh.linkStack.LinkStack;
 
@@ -17,23 +16,34 @@ public class Matrix {
 	private boolean gameover;
 	private boolean win;
 
-	public int[][] matrix;
-	public int[][] preMatrix;
+	public int[][] matrix = { { 16, 32, 32, 0 }, { 128, 0, 1024, 32 }, { 256, 512, 0, 512 }, { 16, 32, 64, 0 } };
 	private LinkStack undo;
 	private LinkStack redo;
+	private double winScore;
 	public int score = 0;
+	private int preScore;
 	public float highScore;
+	public int boom = 0;
+	private int addRock = 0;
+	private boolean isRock = false;
 
 	private boolean canMove = false;
 	private boolean canCombine = false;
 
 	public Matrix() {
 		matrix = new int[ROWS][COLS];
-		preMatrix = new int[ROWS][COLS];
 		undo = new LinkStack();
 		redo = new LinkStack();
+		makeWinScore();
 		highScore = Float.parseFloat(getHighScore());
 		start();
+	}
+
+	private void makeWinScore() {
+		if (ROWS > COLS)
+			winScore = Math.pow(2, ROWS * 2 + (7 - ROWS));
+		else
+			winScore = Math.pow(2, COLS * 2 + (7 - COLS));
 	}
 
 	public void update() {
@@ -42,7 +52,7 @@ public class Matrix {
 			highScore = score;
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
-				if (matrix[row][col] == 2048) {
+				if (matrix[row][col] == winScore) {
 					System.out.println("Win");
 					win = true;
 				}
@@ -113,6 +123,8 @@ public class Matrix {
 					int nextCol = col + 1;
 					if (matrix[row][col] == 0 || matrix[row][nextCol] == 0)
 						continue;
+					if (matrix[row][col] == 1 || matrix[row][nextCol] == 1)
+						continue;
 					if (matrix[row][col] == matrix[row][nextCol]) {
 						matrix[row][col] = matrix[row][col] * 2;
 						matrix[row][nextCol] = 0;
@@ -126,6 +138,8 @@ public class Matrix {
 				for (int col = COLS - 1; col > 0; col--) {
 					int preCol = col - 1;
 					if (matrix[row][col] == 0 || matrix[row][preCol] == 0)
+						continue;
+					if (matrix[row][col] == 1 || matrix[row][preCol] == 1)
 						continue;
 					if (matrix[row][col] == matrix[row][preCol]) {
 						matrix[row][col] = matrix[row][col] * 2;
@@ -141,6 +155,8 @@ public class Matrix {
 					int nextRow = row + 1;
 					if (matrix[row][col] == 0 || matrix[nextRow][col] == 0)
 						continue;
+					if (matrix[row][col] == 1 || matrix[nextRow][col] == 1)
+						continue;
 					if (matrix[row][col] == matrix[nextRow][col]) {
 						matrix[row][col] = matrix[row][col] * 2;
 						matrix[nextRow][col] = 0;
@@ -154,6 +170,8 @@ public class Matrix {
 				for (int row = ROWS - 1; row > 0; row--) {
 					int preRow = row - 1;
 					if (matrix[row][col] == 0 || matrix[preRow][col] == 0)
+						continue;
+					if (matrix[row][col] == 1 || matrix[preRow][col] == 1)
 						continue;
 					if (matrix[row][col] == matrix[preRow][col]) {
 						matrix[row][col] = matrix[row][col] * 2;
@@ -189,7 +207,13 @@ public class Matrix {
 			}
 		}
 		this.score = Integer.parseInt(temp.split("-")[temp.split("-").length - 1]);
-
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (matrix[row][col] == 1) {
+					isRock = true;
+				}
+			}
+		}
 	}
 
 	private void doRedo() {
@@ -205,44 +229,94 @@ public class Matrix {
 			}
 		}
 		this.score = Integer.parseInt(temp.split("-")[temp.split("-").length - 1]);
-
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (matrix[row][col] == 1) {
+					isRock = true;
+				}
+			}
+		}
 	}
 
 	private void checkKeys() {
+		preScore = score;
 		if (Keyboard.typed(KeyEvent.VK_LEFT)) {
 			undo.push(this.returnString(matrix), this.score);
 			redo = new LinkStack();
 			moveTiles("LEFT");
 			combineTiles("LEFT");
 			moveTiles("LEFT");
+			if (preScore == score) {
+				addRock++;
+			} else if (score - preScore == 32)
+				boom++;
+			else
+				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_RIGHT)) {
 			undo.push(this.returnString(matrix), this.score);
 			redo = new LinkStack();
 			moveTiles("RIGHT");
 			combineTiles("RIGHT");
 			moveTiles("RIGHT");
+			if (preScore == score) {
+				addRock++;
+			} else if (score - preScore == 32)
+				boom++;
+			else
+				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_UP)) {
 			undo.push(this.returnString(matrix), this.score);
 			redo = new LinkStack();
 			moveTiles("UP");
 			combineTiles("UP");
 			moveTiles("UP");
+			if (preScore == score) {
+				addRock++;
+			} else if (score - preScore == 32)
+				boom++;
+			else
+				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_DOWN)) {
 			undo.push(this.returnString(matrix), this.score);
 			redo = new LinkStack();
 			moveTiles("DOWN");
 			combineTiles("DOWN");
 			moveTiles("DOWN");
+			if (preScore == score) {
+				addRock++;
+			} else if (score - preScore == 32)
+				boom++;
+			else
+				addRock = 0;
 		} else if (Keyboard.typed(KeyEvent.VK_Z)) {
 			doUndo();
 		} else if (Keyboard.typed(KeyEvent.VK_X)) {
 			doRedo();
+		} else if (Keyboard.typed(KeyEvent.VK_SPACE)) {
+			if (boom > 0 && isRock) {
+				destroyRock();
+				boom--;
+			}
 		}
 		if (canCombine || canMove) {
 			spawnRandom();
 			checkGameover();
 			canCombine = false;
 			canMove = false;
+		}
+	}
+
+	private void destroyRock() {
+		int location = chooseRock();
+		matrix[location / 10][location % 10] = 0;
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (matrix[row][col] == 1) {
+					return;
+				}
+			}
+			isRock = false;
+			return;
 		}
 	}
 
@@ -263,6 +337,8 @@ public class Matrix {
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS - 1; col++) {
 				int nextCol = col + 1;
+				if (matrix[row][col] == 1)
+					continue;
 				if (matrix[row][col] == matrix[row][nextCol]) {
 					return true;
 				}
@@ -271,6 +347,8 @@ public class Matrix {
 		for (int col = 0; col < COLS; col++) {
 			for (int row = 0; row < ROWS - 1; row++) {
 				int nextRow = row + 1;
+				if (matrix[row][col] == 1)
+					continue;
 				if (matrix[row][col] == matrix[nextRow][col]) {
 					return true;
 				}
@@ -291,21 +369,41 @@ public class Matrix {
 			int location = r.nextInt(ROWS * COLS);
 			int row = location % ROWS;
 			int col = location / COLS;
-			if (matrix[row][col] == 0) {
+			if (matrix[row][col] == 0 && addRock < 2) {
 				matrix[row][col] = r.nextInt(10) < 9 ? 2 : 4;
 				notValid = false;
+			} else if (matrix[row][col] == 0 && addRock >= 2) {
+				matrix[row][col] = 1;
+				notValid = false;
+				addRock = 0;
+				isRock = true;
 			}
 		}
 	}
 
+	private int chooseRock() {
+		Random r = new Random();
+		int[] rockLocation = new int[ROWS * COLS];
+		int count = 0;
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (matrix[row][col] == 1) {
+					rockLocation[count++] = row * 10 + col;
+				}
+			}
+		}
+		int location = rockLocation[r.nextInt(count)];
+		return location;
+	}
+
 	public String returnString(int a[][]) {
 		String str = "";
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				if (j == COLS - 1)
-					str += a[i][j] + "-";
+		for (int row = 0; row < ROWS; row++) {
+			for (int col = 0; col < COLS; col++) {
+				if (col == COLS - 1)
+					str += a[row][col] + "-";
 				else
-					str += a[i][j] + "/";
+					str += a[row][col] + "/";
 			}
 		}
 		return str;
