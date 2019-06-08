@@ -194,16 +194,6 @@ public class Matrix {
 		}
 	}
 
-	public void printArr() {
-		for (int row = 0; row < ROWS; row++) {
-			for (int col = 0; col < COLS; col++) {
-				System.out.print(matrix[row][col] + " ");
-			}
-			System.out.println("");
-		}
-		System.out.println("---------------------");
-	}
-
 	private void doUndo() {
 		if (undo.isEmpty())
 			return;
